@@ -308,6 +308,7 @@
         color: #ff4d6d;
         font-size: 20px;
         animation: floatUp 4s linear forwards;
+        pointer-events: none; /* allow clicks through the floating hearts */
       }
 
       @keyframes floatUp {
@@ -500,9 +501,32 @@
         3: "Let's get this party started!",
       };
 
-      document.addEventListener("DOMContentLoaded", () => {
+      function initPage() {
         initializeAmbientBalloons();
-      });
+
+        // attach cake click handler after DOM is ready
+        const cakeElement = document.getElementById("cake");
+        if (!cakeElement) {
+          console.error("Cake element not found");
+        } else {
+          console.log("Cake handler bound");
+          cakeElement.addEventListener("click", () => {
+            console.log("cake clicked");
+            try {
+              triggerPartyConfetti();
+            } catch (e) {
+              console.error("confetti error", e);
+            }
+            alert("Wish Granted! 🎉");
+          });
+        }
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initPage);
+      } else {
+        initPage();
+      }
 
       // STEP 0: Start Experience
       function startExperience() {
@@ -554,17 +578,21 @@
 
         setTimeout(() => {
           const next = current + 1;
+
+          // special case for the countdown step – don't reveal the popper
+          if (next === 4) {
+            // show the countdown screen and kick off the timer
+            document.getElementById("step-countdown").classList.add("active");
+            startCountdown();
+            return;
+          }
+
           const nextEl = document.getElementById(`step-${next}`);
           if (!nextEl) return;
           nextEl.classList.add("active");
 
           if (messages[next]) {
             typeText(`type-${next}`, messages[next], `btn-${next}`);
-          }
-          if (next === 4) {
-            document.getElementById("step-countdown").classList.add("active");
-            startCountdown();
-            return;
           }
         }, 800);
       }
@@ -796,13 +824,6 @@
       }
 
       setInterval(createHeart, 700);
-
-      document.addEventListener("click", (e) => {
-        if (e.target.id === "cake") {
-          triggerPartyConfetti();
-          alert("Wish Granted! 🎉");
-        }
-      });
 
       function createFirework() {
         const fw = document.createElement("div");
