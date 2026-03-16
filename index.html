@@ -36,6 +36,9 @@
         align-items: center;
         perspective: 1500px;
         user-select: none;
+        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: auto;
       }
 
       /* --- Ambient Background --- */
@@ -309,6 +312,106 @@
         font-size: 20px;
         animation: floatUp 4s linear forwards;
         pointer-events: none; /* allow clicks through the floating hearts */
+      }
+      /* =========================
+   RESPONSIVE FIXES
+========================= */
+
+      /* Tablets */
+      @media (max-width: 900px) {
+        .msg-text {
+          font-size: 2rem;
+          max-width: 90%;
+        }
+
+        .greeting-card {
+          width: 90%;
+          padding: 50px 35px;
+        }
+
+        h1 {
+          font-size: 2.8rem;
+        }
+
+        p.message {
+          font-size: 1.1rem;
+        }
+
+        .blaster-emoji {
+          font-size: 7rem;
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 600px) {
+        body {
+          padding: 20px;
+        }
+
+        .msg-text {
+          font-size: 1.5rem;
+          min-height: auto;
+          max-width: 95%;
+        }
+
+        .btn-start {
+          font-size: 1rem;
+          padding: 12px 25px;
+        }
+
+        .btn-continue {
+          font-size: 1rem;
+          padding: 10px 25px;
+        }
+
+        .greeting-card {
+          width: 95%;
+          padding: 35px 25px;
+          border-radius: 18px;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        p.message {
+          font-size: 1rem;
+        }
+
+        .blaster-emoji {
+          font-size: 5rem;
+        }
+
+        .pressure-bar {
+          width: 180px;
+        }
+
+        #cake {
+          font-size: 60px;
+        }
+      }
+
+      /* Small phones */
+      @media (max-width: 400px) {
+        .msg-text {
+          font-size: 1.3rem;
+        }
+
+        .greeting-card {
+          padding: 25px 18px;
+        }
+
+        h1 {
+          font-size: 1.7rem;
+        }
+
+        .blaster-emoji {
+          font-size: 4rem;
+        }
+
+        .pressure-bar {
+          width: 150px;
+        }
       }
 
       @keyframes floatUp {
